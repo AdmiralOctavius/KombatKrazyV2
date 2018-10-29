@@ -2169,46 +2169,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 20254998072532990, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
-        type: 2}
-      propertyPath: orthographic size
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114125701695149632, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
-        type: 2}
-      propertyPath: JumpTimeLim
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114125701695149632, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
-        type: 2}
-      propertyPath: jumpVector.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 114125701695149632, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
-        type: 2}
-      propertyPath: reduceAmt
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 50499501048889332, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
-        type: 2}
-      propertyPath: m_GravityScale
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114125701695149632, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
-        type: 2}
-      propertyPath: jumpForce
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 50499501048889332, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
-        type: 2}
-      propertyPath: m_LinearDrag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 50499501048889332, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
-        type: 2}
-      propertyPath: m_AngularDrag
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad26a9b08f8dbd4bb4cbad349ada590, type: 2}
   m_IsPrefabAsset: 0

@@ -102,7 +102,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -130,9 +130,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.6
-  m_LinearDrag: 0.1
-  m_AngularDrag: 0.075
-  m_GravityScale: 2
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -150,18 +150,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.021402031, y: -1.5406337}
+  m_Offset: {x: 0.021402031, y: -1.5297521}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.024, y: 3.072}
+    oldSize: {x: 1.022, y: 3.072}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.65827066, y: 0.08116174}
+  m_Size: {x: 0.65827066, y: 0.059398413}
   m_EdgeRadius: 0
 --- !u!61 &61168859303051810
 BoxCollider2D:
@@ -179,7 +179,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.024, y: 3.072}
+    oldSize: {x: 1.022, y: 3.072}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -324,10 +324,10 @@ MonoBehaviour:
   walkSpeed: 4
   accelSpeed: 10
   sprintAccelSpeed: 15
-  jumpForce: 7.555
+  jumpForce: 12
   currentlyJumping: 0
   jumpFallSpeed: 2
-  JumpTimeLim: 2
+  JumpTimeLim: 5
   wallSliding: 0
   wallSlideSpeed: -0.4
   wallSlideSpeedSprint: -0.1
@@ -349,6 +349,12 @@ MonoBehaviour:
   doubleJumpSpeed: 2.5
   sprintBoots: 0
   anim: {fileID: 95627385584333088}
+  savedGravityScale: 0
+  reduceAmt: 0.4
+  jumpTimer: 0
+  addAmt: 2
+  fallAddAmt: 1
+  GravScaleMax: 12
 --- !u!114 &114666545209609070
 MonoBehaviour:
   m_ObjectHideFlags: 1

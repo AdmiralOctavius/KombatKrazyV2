@@ -25,6 +25,7 @@ public class Globals : MonoBehaviour {
         if (timeLeft <= 0)
         {
             player.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            player.gameObject.GetComponent<HealthBar>().dead = true;
             Debug.Log("Game Over");
             if(audioPl.isPlaying == false)
             {
@@ -35,7 +36,7 @@ public class Globals : MonoBehaviour {
 
         if (player.gameObject.GetComponent<HealthBar>().dead)
         {
-            Invoke("LoadMenu", 2);
+            LoadMenu();
         }
     }
 
