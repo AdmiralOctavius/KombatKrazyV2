@@ -107,7 +107,7 @@ public class PlayerScript : MonoBehaviour {
         savedGravityScale = transform.GetComponent<Rigidbody2D>().gravityScale;
         if (scene.name == "level1" || scene.name == "tutorialLevel")
         {
-            Debug.Log("got here");
+            
             PlayerPrefs.DeleteAll();
         }
         
@@ -157,79 +157,79 @@ public class PlayerScript : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftShift) && sprintBoots)
         {
            
-                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+            
+            if (inWallJump)
                 {
-                
-                if (inWallJump)
-                    {
-                    spriteMan.flipX = true;
-                    rb.AddForce(new Vector2(-sprintSpeed / 2, 0));
-                        
-                    }
-                    else if(wallSliding)
-                    {
-                    spriteMan.flipX = false;
-                    if (right == true)
-                        {
-                        if (rb.velocity.y > 0)
-                        {
-                            //Do Nothing
-                        }
-                        else
-                        {
-                            //Todo- setup raycast at each point and grab the opposite side of collider
-                            //Can detect collision point instead as well-> https://answers.unity.com/questions/783377/detect-side-of-collision-in-box-collider-2d.html
-                            //Raycast may be easier?
-                            //Solution found was dectecting the sides of the collision when we collide
-                            rb.velocity = new Vector2(0, wallSlideSpeedSprint);
-                        }
-                        }
-                        else
-                        {
-                        
-                        if (timeToWallUnstick > 0)
-                            {
-                                timeToWallUnstick -= Time.deltaTime;
-                            }
-                            else
-                            {
-                                timeToWallUnstick = wallStickTime;
-                                if (right == false)
-                                {
-                                    //rb.velocity = new Vector2(-sprintSpeed, 0);
-                                }
-                            }
-
-
-                        }
+                spriteMan.flipX = true;
+                rb.AddForce(new Vector2(-sprintSpeed / 2, 0));
+                    
                 }
+                else if(wallSliding)
+                {
+                spriteMan.flipX = false;
+                if (right == true)
+                    {
+                    if (rb.velocity.y > 0)
+                    {
+                        //Do Nothing
+                    }
                     else
                     {
-                    spriteMan.flipX = true;
-                    if (rb.velocity.x > -sprintSpeed)
+                        //Todo- setup raycast at each point and grab the opposite side of collider
+                        //Can detect collision point instead as well-> https://answers.unity.com/questions/783377/detect-side-of-collision-in-box-collider-2d.html
+                        //Raycast may be easier?
+                        //Solution found was dectecting the sides of the collision when we collide
+                        rb.velocity = new Vector2(0, wallSlideSpeedSprint);
+                    }
+                    }
+                    else
+                    {
+                    
+                    if (timeToWallUnstick > 0)
                         {
-                            rb.AddForce(new Vector2(-sprintAccelSpeed, 0));
+                            timeToWallUnstick -= Time.deltaTime;
                         }
                         else
                         {
-                            rb.AddForce(new Vector2(-sprintSpeed, 0));
+                            timeToWallUnstick = wallStickTime;
+                            if (right == false)
+                            {
+                                //rb.velocity = new Vector2(-sprintSpeed, 0);
+                            }
                         }
+
+
+                    }
+            }
+                else
+                {
+                spriteMan.flipX = true;
+                if (rb.velocity.x > -sprintSpeed)
+                    {
+                        rb.AddForce(new Vector2(-sprintAccelSpeed, 0));
+                    }
+                    else
+                    {
+                        rb.AddForce(new Vector2(-sprintSpeed, 0));
                     }
                 }
+            }
 
-                else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-                {
-               
+            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+            
                 if (inWallJump)
-                    {
+                {
                     spriteMan.flipX = false;
                     rb.AddForce(new Vector2(-sprintSpeed / 2, 0));
-                    }
-                    else if (wallSliding)
-                    {
+                }
+                else if (wallSliding)
+                {
                     spriteMan.flipX = true;
                     if (right == false)
-                        {
+                    { 
                         if (rb.velocity.y > 0)
                         {
                             //Do Nothing
@@ -238,7 +238,7 @@ public class PlayerScript : MonoBehaviour {
                         else
                         {
                             rb.velocity = new Vector2(0, wallSlideSpeedSprint);
-
+                           
                         }
                         }
                         else
@@ -258,21 +258,20 @@ public class PlayerScript : MonoBehaviour {
                             
                             
                         }
-
                 }
+                else
+                {
+                spriteMan.flipX = false;
+                if (rb.velocity.x < sprintSpeed)
+                    {
+                        rb.AddForce(new Vector2(sprintAccelSpeed, 0));
+                    }
                     else
                     {
-                    spriteMan.flipX = false;
-                    if (rb.velocity.x < sprintSpeed)
-                        {
-                            rb.AddForce(new Vector2(sprintAccelSpeed, 0));
-                        }
-                        else
-                        {
-                            rb.AddForce(new Vector2(sprintSpeed, 0));
-                    }
+                        rb.AddForce(new Vector2(sprintSpeed, 0));
                 }
-                }
+            }
+            }
 
             
 
@@ -285,18 +284,18 @@ public class PlayerScript : MonoBehaviour {
             //Reasons: We want this so we can have deceleration on moving
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-            
+
                 if (inWallJump)
                 {
                     spriteMan.flipX = true;
-                    rb.AddForce(new Vector2(-accelSpeed/1.5f, 0));
+                    rb.AddForce(new Vector2(-accelSpeed / 1.5f, 0));
                 }
                 else if (wallSliding)
                 {
                     spriteMan.flipX = false;
                     if (right == true)
-                    { 
-                        if(rb.velocity.y > 0)
+                    {
+                        if (rb.velocity.y > 0)
                         {
                             //Do Nothing
                             Debug.Log("got here");
@@ -304,26 +303,26 @@ public class PlayerScript : MonoBehaviour {
                         else
                         {
                             rb.velocity = new Vector2(0, wallSlideSpeed);
-                            Debug.Log("applied wallspeed");
+                            
 
                         }
                     }
                     else
                     {
-                         if (timeToWallUnstick > 0)
-                         {
-                             timeToWallUnstick -= Time.deltaTime;
-                         }
-                         else
-                         {
-                             timeToWallUnstick = wallStickTime;
-                             if (right == false)
-                             {
-                                 rb.AddForce(new Vector2(-accelSpeed, 0));
-                             }                            
-                         }
+                        if (timeToWallUnstick > 0)
+                        {
+                            timeToWallUnstick -= Time.deltaTime;
+                        }
+                        else
+                        {
+                            timeToWallUnstick = wallStickTime;
+                            if (right == false)
+                            {
+                                rb.AddForce(new Vector2(-accelSpeed, 0));
+                            }
+                        }
                     }
-                    
+
                 }
                 else
                 {
@@ -334,17 +333,17 @@ public class PlayerScript : MonoBehaviour {
                     }
                     else
                     {
-                        rb.AddForce(new Vector2(-walkSpeed, 0));                       
+                        rb.AddForce(new Vector2(-walkSpeed, 0));
                     }
                 }
             }
             else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                
+
                 if (inWallJump)
                 {
                     spriteMan.flipX = false;
-                    rb.AddForce(new Vector2(accelSpeed /1.5f, 0));
+                    rb.AddForce(new Vector2(accelSpeed / 1.5f, 0));
                 }
                 else if (wallSliding)
                 {
@@ -354,12 +353,13 @@ public class PlayerScript : MonoBehaviour {
                         if (rb.velocity.y > 0)
                         {
                             //Do Nothing
-                            Debug.Log("Got to Right no wall slide");
+                            //Debug.Log("Got to Right no wall slide");
                         }
                         else
                         {
                             rb.velocity = new Vector2(0, wallSlideSpeed);
-                            Debug.Log("Got to Rightsda wall slide");
+                            //Debug.Log("Got to Rightsda wall slide");
+                            Debug.Log("got to this point in wallslide right rbYVel: " + rb.velocity.y);
                         }
                     }
                     else
@@ -376,8 +376,8 @@ public class PlayerScript : MonoBehaviour {
                                 rb.AddForce(new Vector2(accelSpeed, 0));
                             }
                         }
-                    }                   
-                }                
+                    }
+                }
                 else
                 {
                     spriteMan.flipX = false;
@@ -387,8 +387,23 @@ public class PlayerScript : MonoBehaviour {
                     }
                     else
                     {
-                        rb.AddForce(new Vector2(walkSpeed, 0));                        
+                        rb.AddForce(new Vector2(walkSpeed, 0));
                     }
+                }
+            }
+            //Should theoretically set the walking speed to zero smoothly
+            //Maybe do this through lerp?
+
+            else if (Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.LeftArrow) == false && Input.GetKey(KeyCode.RightArrow) == false)
+            {
+                  
+                if(currentlyJumping == false && inWallJump == false)
+                {
+                    //Debug.Log(rb.velocity.x / 0.005f);
+                    rb.velocity = new Vector2(rb.velocity.x /1.1f, rb.velocity.y);
+                    Debug.Log("got to this point in stop rbYVel: " + rb.velocity.y);
+                    Debug.Log("Gravity scale: " + rb.gravityScale);
+
                 }
             }
             else
@@ -457,7 +472,7 @@ public class PlayerScript : MonoBehaviour {
                 }
         }
 
-        if(currentlyJumping && !Input.GetKey(KeyCode.Space) && playerFallingHeld == false)
+        if((currentlyJumping || inWallJump) && !Input.GetKey(KeyCode.Space) && playerFallingHeld == false)
         {
             //This code and the other additive gravity jump code like it was inspired by this tutorial
             //https://youtu.be/7KiK0Aqtmzc
@@ -466,7 +481,7 @@ public class PlayerScript : MonoBehaviour {
             if (gameObject.GetComponent<Rigidbody2D>().gravityScale < GravScaleMax)
             {
                 gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + addAmt;
-                Debug.Log(gameObject.GetComponent<Rigidbody2D>().gravityScale.ToString());
+                //Debug.Log(gameObject.GetComponent<Rigidbody2D>().gravityScale.ToString());
             }
             
         }
@@ -504,99 +519,108 @@ public class PlayerScript : MonoBehaviour {
             {
                 playerFallingHeld = true;
             }
-            //Pulled this out
-            /*else
-            {
-                playerFallingHeld = false;
-            }*/
-            if (wallSliding)
-            {
-                AudioPlayer.Play();
-                inWallJump = true;
-                wallSliding = false;
-                currentlyJumping = true;
-                rb.velocity = new Vector3(0, 0, 0);
 
-                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            if(currentlyJumping == true)
+            {
+                //Do naught anything
+            }
+            else
+            {
+
+                //Pulled this out
+                /*else
                 {
-                    spriteMan.flipX = true;
-                    if (right == true)
-                    {
-                        //Sticky jump
-                        //rb.velocity = new Vector2(wallSlideJumpX,wallSlideJumpY);
-                        rb.AddForce(new Vector2(wallSlideJumpX, wallSlideJumpY), ForceMode2D.Impulse);
-                        Debug.Log("Sticky jump performed");
-                    }
-                    else
-                    {
-                        if (farWallJump)
-                        {
-                            //Far Jump
-                            rb.AddForce(new Vector2(-wallLeapX, wallLeapY), ForceMode2D.Impulse);
-                            Debug.Log("Far Jump performed : " + rb.velocity.y.ToString());
+                    playerFallingHeld = false;
+                }*/
+                if (wallSliding == true && currentlyJumping == false && inWallJump == false)
+                {
+                    AudioPlayer.Play();
+                    inWallJump = true;
+                    wallSliding = false;
+                    currentlyJumping = true;
+                    rb.velocity = new Vector2(0, 0);
+                    Debug.Log(rb.velocity.ToString());
 
+                    if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                    {
+                        spriteMan.flipX = true;
+                        if (right == true)
+                        {
+                            //Sticky jump
+                            //rb.velocity = new Vector2(wallSlideJumpX,wallSlideJumpY);
+                            rb.AddForce(new Vector2(wallSlideJumpX, wallSlideJumpY), ForceMode2D.Impulse);
+                            Debug.Log("Sticky jump performed");
+                        }
+                        else
+                        {
+                            if (farWallJump)
+                            {
+                                //Far Jump
+                                rb.AddForce(new Vector2(-wallLeapX, wallLeapY), ForceMode2D.Impulse);
+                                Debug.Log("Far Jump performed : " + rb.velocity.y.ToString());
+
+                            }
                         }
                     }
-                }
-                else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-                {
-                    spriteMan.flipX = false;
-                    if (right == true)
+                    else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
                     {
-                        if (farWallJump)
+                        spriteMan.flipX = false;
+                        if (right == true)
                         {
-                            //Far Jump
-                            rb.AddForce(new Vector2(wallLeapX, wallLeapY), ForceMode2D.Impulse);
-                            Debug.Log("Far Jump performed : " + rb.velocity.y.ToString());
+                            if (farWallJump)
+                            {
+                                //Far Jump
+                                rb.AddForce(new Vector2(wallLeapX, wallLeapY), ForceMode2D.Impulse);
+                                Debug.Log("Far Jump performed : " + rb.velocity.y.ToString());
+
+                            }
+                        }
+                        else
+                        {
+                            //Sticky Jump
+                            rb.AddForce(new Vector2(-wallSlideJumpX, wallSlideJumpY), ForceMode2D.Impulse);
+                            Debug.Log("Sticky jump performed Time:" + Time.time);
 
                         }
+
                     }
                     else
                     {
-                        //Sticky Jump
-                        rb.AddForce(new Vector2(-wallSlideJumpX, wallSlideJumpY), ForceMode2D.Impulse);
-                        Debug.Log("Sticky jump performed");
+                        if (right == true)
+                        {
+                            rb.AddForce(new Vector2(wallJumpOffX, wallJumpOffY), ForceMode2D.Impulse);
+                            Debug.Log("Simple wall jump performed");
+                        }
+                        else
+                        {
+                            rb.AddForce(new Vector2(-wallJumpOffX, wallJumpOffY), ForceMode2D.Impulse);
+                            Debug.Log("Simple wall jump performed");
+                        }
 
                     }
 
+                    Invoke("NotInWallJump", 0.5f);
                 }
-                else
+                else if (!currentlyJumping)
                 {
-                    if (right == true)
-                    {
-                        rb.AddForce(new Vector2(wallJumpOffX, wallJumpOffY), ForceMode2D.Impulse);
-                        Debug.Log("Simple wall jump performed");
-                    }
-                    else
-                    {
-                        rb.AddForce(new Vector2(-wallJumpOffX, wallJumpOffY), ForceMode2D.Impulse);
-                        Debug.Log("Simple wall jump performed");
-                    }
-
+                    Debug.Log("Normal Jump Time:" + Time.time);
+                    AudioPlayer.Play();
+                    rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                    currentlyJumping = true;
+                    jumpStartTime = Time.time;
                 }
 
-                Invoke("NotInWallJump", 0.5f);
+                if (currentlyJumping && doubleJumpBoots && notDoubleJumped == false)
+                {
+
+                }
             }
-
-            if (!currentlyJumping)
-            {
-                AudioPlayer.Play();
-                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-                currentlyJumping = true;
-                jumpStartTime = Time.time;
-            }
-
-            if (currentlyJumping && doubleJumpBoots && notDoubleJumped == false)
-            {
-
-            }
-
         }
+
+
+
+        //Debug.Log("Y Vel: " + rb.velocity.y);
         
-
-
-
-
 
     }
 
@@ -682,6 +706,7 @@ public class PlayerScript : MonoBehaviour {
 
     void OnCollisionStay2D(Collision2D col)
     {
+        Debug.Log(col.gameObject.tag.ToString());
         if((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) && currentlyJumping){
             //This collision detection found from: https://answers.unity.com/questions/783377/detect-side-of-collision-in-box-collider-2d.html
             Collider2D collider = col.collider;
