@@ -2274,6 +2274,16 @@ Prefab:
       propertyPath: wallJumpX
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114125701695149632, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
+        type: 2}
+      propertyPath: jumpForce
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 50499501048889332, guid: 3ad26a9b08f8dbd4bb4cbad349ada590,
+        type: 2}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad26a9b08f8dbd4bb4cbad349ada590, type: 2}
   m_IsPrefabAsset: 0
@@ -2338,6 +2348,10 @@ Prefab:
         type: 2}
       propertyPath: m_Size.x
       value: 1.4199076
+      objectReference: {fileID: 0}
+    - target: {fileID: 1323360311760182, guid: edbce5e4aff400448beed30c6fcc7c52, type: 2}
+      propertyPath: m_Name
+      value: FirstBlock
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edbce5e4aff400448beed30c6fcc7c52, type: 2}

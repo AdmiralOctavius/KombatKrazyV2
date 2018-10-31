@@ -98,6 +98,8 @@ public class PlayerScript : MonoBehaviour {
     //This should be fractionally smaller than addAmt
     public float fallAddAmt;
     public float GravScaleMax;  
+
+    public bool falling;
     // Use this for initialization
     void Start () {
         spriteMan = gameObject.GetComponent<SpriteRenderer>();
@@ -105,6 +107,7 @@ public class PlayerScript : MonoBehaviour {
         Scene scene;
         scene = SceneManager.GetActiveScene();
         savedGravityScale = transform.GetComponent<Rigidbody2D>().gravityScale;
+        falling = false;
         if (scene.name == "level1" || scene.name == "tutorialLevel")
         {
             
@@ -357,7 +360,7 @@ public class PlayerScript : MonoBehaviour {
                         }
                         else
                         {
-                            rb.velocity = new Vector2(0, wallSlideSpeed);
+                            //rb.velocity = new Vector2(0, wallSlideSpeed);
                             //Debug.Log("Got to Rightsda wall slide");
                             Debug.Log("got to this point in wallslide right rbYVel: " + rb.velocity.y);
                         }
@@ -373,7 +376,7 @@ public class PlayerScript : MonoBehaviour {
                             timeToWallUnstick = wallStickTime;
                             if (right == true)
                             {
-                                rb.AddForce(new Vector2(accelSpeed, 0));
+                                //rb.AddForce(new Vector2(accelSpeed, 0));
                             }
                         }
                     }
@@ -401,8 +404,8 @@ public class PlayerScript : MonoBehaviour {
                 {
                     //Debug.Log(rb.velocity.x / 0.005f);
                     rb.velocity = new Vector2(rb.velocity.x /1.1f, rb.velocity.y);
-                    Debug.Log("got to this point in stop rbYVel: " + rb.velocity.y);
-                    Debug.Log("Gravity scale: " + rb.gravityScale);
+                    //Debug.Log("got to this point in stop rbYVel: " + rb.velocity.y);
+                    //Debug.Log("Gravity scale: " + rb.gravityScale);
 
                 }
             }
@@ -414,105 +417,6 @@ public class PlayerScript : MonoBehaviour {
 
        
 
-        if (Input.GetKey(KeyCode.Space) && currentlyJumping && playerFallingHeld)   
-        {
-            jumpTimer += Time.deltaTime;
-            if (rb.velocity.y < 0)
-            {
-                if (rb.velocity.y > jumpFallSpeed)
-                {
-                    //Do nothing
-                }
-                //Here we're establishing a cap on downward velocity if held button
-                if (rb.velocity.y < jumpFallSpeed && playerFallingHeld == true)
-                {
-
-                    //rb.velocity = new Vector3(rb.velocity.x, jumpFallSpeed, 0);
-                    //Will help resist the fall
-                    rb.AddForce(new Vector2(0, jumpFallSpeed), ForceMode2D.Force);
-                    
-                }
-            }
-            else
-            {
-                if (JumpTimeLim > jumpTimer)
-                {
-                    if(gameObject.GetComponent<Rigidbody2D>().gravityScale < GravScaleMax)
-                    {
-                        gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + fallAddAmt;
-
-                    }
-                }
-
-                    //This Code here was inspired by this comment on reducing gravity scale
-                    //https://www.reddit.com/r/Unity3D/comments/2bzy8u/super_meat_boyesque_jumping/cjapdb1/
-                    //In addition I've been looking at the later depricated code from this:http://www.gamasutra.com/blogs/DanielFineberg/20150825/244650/Designing_a_Jump_in_Unity.php
-                    //As an idea lead
-                    //Debug.Log("Got here in jump held " + JumpTimeLim + " : " + jumpTimer);
-                    //In the end I've scrapped this section again as my experimenting didn't get me the results I wanted
-                    /*if (JumpTimeLim > jumpTimer)
-                    {
-                        Debug.Log(gameObject.GetComponent<Rigidbody2D>().gravityScale - reduceAmt);
-                        if (transform.GetComponent<Rigidbody2D>().gravityScale - reduceAmt >= 0)
-                        {
-                            gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale - reduceAmt;
-                            Debug.Log(gameObject.GetComponent<Rigidbody2D>().gravityScale.ToString());
-                        }
-                        else
-                        {
-                            gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-                        }
-
-                    }
-                    else
-                    {
-                        gameObject.GetComponent<Rigidbody2D>().gravityScale = savedGravityScale;
-                    }*/
-
-                }
-        }
-
-        if((currentlyJumping || inWallJump) && !Input.GetKey(KeyCode.Space) && playerFallingHeld == false)
-        {
-            //This code and the other additive gravity jump code like it was inspired by this tutorial
-            //https://youtu.be/7KiK0Aqtmzc
-            //Following along with the ideas and methods given has really solidified my stuff
-
-            if (gameObject.GetComponent<Rigidbody2D>().gravityScale < GravScaleMax)
-            {
-                gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + addAmt;
-                //Debug.Log(gameObject.GetComponent<Rigidbody2D>().gravityScale.ToString());
-            }
-            
-        }
-        //Todo: try this guy's idea: https://www.reddit.com/r/Unity3D/comments/2bzy8u/super_meat_boyesque_jumping/cjap448/
-        //Deprecated again
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            //gameObject.GetComponent<Rigidbody2D>().gravityScale = savedGravityScale;
-            playerFallingHeld = false;
-        }
-
-      
-        if(rb.velocity != new Vector2(0, 0))
-        {
-            anim.SetBool("moving", true);
-        }
-        else
-        {
-            anim.SetBool("moving", false);
-        }
-
-        if (wallSliding)
-        {
-            anim.SetBool("wallSliding", true);
-
-        }
-        else
-        {
-            anim.SetBool("wallSliding", false);
-        }
-        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (playerFallingHeld == false)
@@ -577,9 +481,10 @@ public class PlayerScript : MonoBehaviour {
                         }
                         else
                         {
+                            Debug.Log(currentlyJumping);
                             //Sticky Jump
-                            rb.AddForce(new Vector2(-wallSlideJumpX, wallSlideJumpY), ForceMode2D.Impulse);
-                            Debug.Log("Sticky jump performed Time:" + Time.time);
+                            //rb.AddForce(new Vector2(-wallSlideJumpX, wallSlideJumpY), ForceMode2D.Impulse);
+                            //Debug.Log("Sticky jump performed Time:" + Time.time);
 
                         }
 
@@ -605,9 +510,12 @@ public class PlayerScript : MonoBehaviour {
                 {
                     Debug.Log("Normal Jump Time:" + Time.time);
                     AudioPlayer.Play();
+                    Debug.Log("Pre jump Vel: " + rb.velocity.y);
                     rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                    Debug.Log("Upward Velocity : " + rb.velocity.y);
                     currentlyJumping = true;
                     jumpStartTime = Time.time;
+                    Debug.Log(wallSliding);
                 }
 
                 if (currentlyJumping && doubleJumpBoots && notDoubleJumped == false)
@@ -616,11 +524,116 @@ public class PlayerScript : MonoBehaviour {
                 }
             }
         }
+        else if (Input.GetKey(KeyCode.Space) && currentlyJumping && playerFallingHeld)   
+        {
+            jumpTimer += Time.deltaTime;
+            if (rb.velocity.y < 0)
+            {
+                if (rb.velocity.y > jumpFallSpeed)
+                {
+                    //Do nothing
+                }
+                //Here we're establishing a cap on downward velocity if held button
+                if (rb.velocity.y < jumpFallSpeed && playerFallingHeld == true)
+                {
+
+                    //rb.velocity = new Vector3(rb.velocity.x, jumpFallSpeed, 0);
+                    //Will help resist the fall
+                    rb.AddForce(new Vector2(0, jumpFallSpeed), ForceMode2D.Force);
+                    
+                }
+            }
+            else
+            {
+                if (JumpTimeLim > jumpTimer)
+                {
+                    if(gameObject.GetComponent<Rigidbody2D>().gravityScale < GravScaleMax)
+                    {
+                        gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + fallAddAmt;
+
+                    }
+                }
+
+                    //This Code here was inspired by this comment on reducing gravity scale
+                    //https://www.reddit.com/r/Unity3D/comments/2bzy8u/super_meat_boyesque_jumping/cjapdb1/
+                    //In addition I've been looking at the later depricated code from this:http://www.gamasutra.com/blogs/DanielFineberg/20150825/244650/Designing_a_Jump_in_Unity.php
+                    //As an idea lead
+                    //Debug.Log("Got here in jump held " + JumpTimeLim + " : " + jumpTimer);
+                    //In the end I've scrapped this section again as my experimenting didn't get me the results I wanted
+                    /*if (JumpTimeLim > jumpTimer)
+                    {
+                        Debug.Log(gameObject.GetComponent<Rigidbody2D>().gravityScale - reduceAmt);
+                        if (transform.GetComponent<Rigidbody2D>().gravityScale - reduceAmt >= 0)
+                        {
+                            gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale - reduceAmt;
+                            Debug.Log(gameObject.GetComponent<Rigidbody2D>().gravityScale.ToString());
+                        }
+                        else
+                        {
+                            gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+                        }
+
+                    }
+                    else
+                    {
+                        gameObject.GetComponent<Rigidbody2D>().gravityScale = savedGravityScale;
+                    }*/
+
+                }
+        }
+        //Todo: try this guy's idea: https://www.reddit.com/r/Unity3D/comments/2bzy8u/super_meat_boyesque_jumping/cjap448/
+        //Deprecated again
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            //gameObject.GetComponent<Rigidbody2D>().gravityScale = savedGravityScale;
+            playerFallingHeld = false;
+        }
+
+        if((currentlyJumping || inWallJump) && !Input.GetKey(KeyCode.Space) && playerFallingHeld == false)
+        {
+            //This code and the other additive gravity jump code like it was inspired by this tutorial
+            //https://youtu.be/7KiK0Aqtmzc
+            //Following along with the ideas and methods given has really solidified my stuff
+
+            if (gameObject.GetComponent<Rigidbody2D>().gravityScale < GravScaleMax)
+            {
+                gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + addAmt;
+                //Debug.Log(gameObject.GetComponent<Rigidbody2D>().gravityScale.ToString());
+            }
+            
+        }
+
+        //Animation bools
+        if(rb.velocity != new Vector2(0, 0))
+        {
+            anim.SetBool("moving", true);
+        }
+        else
+        {
+            anim.SetBool("moving", false);
+        }
+        if (wallSliding)
+        {
+            anim.SetBool("wallSliding", true);
+        }
+        else
+        {
+            anim.SetBool("wallSliding", false);
+        }
+        
 
 
 
         //Debug.Log("Y Vel: " + rb.velocity.y);
         
+        if(falling == true)
+        {
+            if (gameObject.GetComponent<Rigidbody2D>().gravityScale < GravScaleMax)
+            {
+                gameObject.GetComponent<Rigidbody2D>().gravityScale = gameObject.GetComponent<Rigidbody2D>().gravityScale + addAmt;
+                //Debug.Log(gameObject.GetComponent<Rigidbody2D>().gravityScale.ToString());
+            }
+        }
 
     }
 
@@ -672,6 +685,7 @@ public class PlayerScript : MonoBehaviour {
         //After adding so much gravity the player would slam through the floor before the physics system could grab him
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.GetComponent<Rigidbody2D>().velocity.x, 0);
         //Deprecated timer = 0;
+        falling = false;
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -679,6 +693,13 @@ public class PlayerScript : MonoBehaviour {
         currentlyJumping = false;
         wallSliding = false;
         playerFallingHeld = false;
+        falling = false;
+        gameObject.GetComponent<Rigidbody2D>().gravityScale = savedGravityScale;
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        falling = true;
     }
 
 
@@ -714,7 +735,7 @@ public class PlayerScript : MonoBehaviour {
             {
                 wallSliding = true;
                 currentlyJumping = false;
-
+                Debug.Log(wallSliding);
                 Vector3 contactPoint = col.contacts[0].point;
                 Vector3 center = collider.bounds.center;
                 //This is the important bit here. Essentially stating that right is true 
@@ -733,6 +754,8 @@ public class PlayerScript : MonoBehaviour {
         {
             wallSliding = false;
         }
+
+        
     }
 
     void NotInWallJump()
