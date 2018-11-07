@@ -483,7 +483,7 @@ public class PlayerScript : MonoBehaviour {
                         {
                             Debug.Log(currentlyJumping);
                             //Sticky Jump
-                            //rb.AddForce(new Vector2(-wallSlideJumpX, wallSlideJumpY), ForceMode2D.Impulse);
+                            rb.AddForce(new Vector2(-wallSlideJumpX, wallSlideJumpY), ForceMode2D.Impulse);
                             //Debug.Log("Sticky jump performed Time:" + Time.time);
 
                         }
